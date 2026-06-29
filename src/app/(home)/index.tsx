@@ -1,10 +1,13 @@
-import { Show } from '@clerk/expo'
-import { AuthView, UserButton } from '@clerk/expo/native'
-import { useState } from 'react'
-import { Button, Modal, StyleSheet, View } from 'react-native'
+import { Show } from "@clerk/expo";
+import { AuthView, UserButton } from "@clerk/expo/native";
+import { useState } from "react";
+import { Button, Modal, StyleSheet, View, Text } from "react-native";
+import "../../../global.css";
+import { useTheme } from "@/providers/ThemProvider";
 
 export default function Screen() {
-  const [isAuthOpen, setIsAuthOpen] = useState(false)
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const colors = useTheme();
 
   return (
     <View style={styles.container}>
@@ -22,14 +25,22 @@ export default function Screen() {
       >
         <AuthView onDismiss={() => setIsAuthOpen(false)} />
       </Modal>
+
+      <View
+        style={{
+          backgroundColor: colors.background,
+        }}
+      >
+        <Text style={{ color: colors.foreground }}>Hello</Text>
+      </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
-})
+});
