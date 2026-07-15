@@ -10,22 +10,11 @@ export default function Screen() {
   const colors = useTheme();
 
   return (
-    <View style={styles.container}>
-      <Show when="signed-in">
+    <View >
+      
         <UserButton />
-      </Show>
-      <Show when="signed-out">
-        <Button title="Sign in" onPress={() => setIsAuthOpen(true)} />
-      </Show>
-      <Modal
-        animationType="slide"
-        visible={isAuthOpen}
-        presentationStyle="pageSheet"
-        onRequestClose={() => setIsAuthOpen(false)}
-      >
-        <AuthView onDismiss={() => setIsAuthOpen(false)} />
-      </Modal>
-
+     
+ 
       <View
         style={{
           backgroundColor: colors.background,
@@ -37,10 +26,4 @@ export default function Screen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
+

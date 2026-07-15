@@ -1,5 +1,3 @@
-// constants/colors.ts
-
 export const Colors = {
   light: {
     background: "#F3FCF5",
@@ -47,8 +45,8 @@ export const Colors = {
     card: "#16271D",
     cardForeground: "#E3F3E7",
 
-    primary: "#3FDC79",
-    primaryForeground: "#FFFFFF",
+    primary: "#253D2F",
+    primaryForeground: "#C5E4CF",
 
     secondary: "#253D2F",
     secondaryForeground: "#C5E4CF",
