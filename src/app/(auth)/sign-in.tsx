@@ -1,10 +1,10 @@
-import { AuthView } from "@clerk/expo/native";
+import SocialAuthButton from "@/components/auth/SocialAuthButton";
 import useSocialAuth from "@/hooks/useSocialAuth";
 import { useTheme } from "@/providers/ThemProvider";
-import { View, Text, Pressable } from "react-native";
+import { View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Image } from "expo-image";
-import {FontAwesome, FontAwesome6} from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 
 export default function SignInScreen() {
   const { handleSocialAuth, loadingStrategy } = useSocialAuth();
@@ -15,6 +15,37 @@ export default function SignInScreen() {
   const isGithubLoading = loadingStrategy === "oauth_github";
 
   const isLoading = isGoogleLoading || isFacebookLoading || isGithubLoading;
+  const socialProviders = [
+    {
+      key: "google",
+      label: "Continue with Google",
+      loadingLabel: "Signing in with Google...",
+      isLoading: isGoogleLoading,
+      onPress: () => handleSocialAuth("oauth_google"),
+      icon: (
+        <Image
+          source={require("@/assets/images/google.png")}
+          style={{ width: 20, height: 20 }}
+        />
+      ),
+    },
+    {
+      key: "github",
+      label: "Continue with GitHub",
+      loadingLabel: "Signing in with GitHub...",
+      isLoading: isGithubLoading,
+      onPress: () => handleSocialAuth("oauth_github"),
+      icon: <FontAwesome name="github" size={20} color="#111" />,
+    },
+    {
+      key: "facebook",
+      label: "Continue with Facebook",
+      loadingLabel: "Signing in with Facebook...",
+      isLoading: isFacebookLoading,
+      onPress: () => handleSocialAuth("oauth_facebook"),
+      icon: <FontAwesome name="facebook" size={20} color="#1877F2" />,
+    },
+  ];
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.primary }} edges={["top"]}>
@@ -83,74 +114,18 @@ export default function SignInScreen() {
         </Text>
 
         <View className="mt-6 ">
-          <Pressable
-            className={`mb-3 h-14 flex-row items-center rounded-2xl px-4 active:opacity-90 ${isLoading ? "opaciity-70" : ""}`}
-            style={{
-              borderWidth: 1,
-              borderColor: colors.border,
-              backgroundColor: colors.card,
-            }}
-            disabled={isLoading}
-            onPress={() => handleSocialAuth("oauth_google")}
-          >
-            <View className="h-8 w-8 items-center justify-center rounded-full bg-white">
-              <Image
-                source={require("@/assets/images/google.png")}
-                style={{ width: 20, height: 20 }}
-              />
-            </View>
-            <Text
-              className="ml-3 flex-1 text-lg font-semibold"
-              style={{ color: colors.cardForeground }}
-            >
-              {isGoogleLoading ? "Signing in with Google..." : "Continue with Google"}
-            </Text>
-            <FontAwesome name="angle-right" size={18} color="#5f6e66" />
-          </Pressable>
-
-           <Pressable
-            className={`mb-3 h-14 flex-row items-center rounded-2xl px-4 active:opacity-90 ${isLoading ? "opaciity-70" : ""}`}
-            style={{
-              borderWidth: 1,
-              borderColor: colors.border,
-              backgroundColor: colors.card,
-            }}
-            disabled={isLoading}
-            onPress={() => handleSocialAuth("oauth_github")}
-          >
-            <View className="h-8 w-8 items-center justify-center rounded-full bg-white">
-             <FontAwesome name="github" size={20} color="#111" />
-            </View>
-            <Text
-              className="ml-3 flex-1 text-lg font-semibold"
-              style={{ color: colors.cardForeground }}
-            >
-              {isGithubLoading ? "Signing in with GitHub..." : "Continue with GitHub"}
-            </Text>
-            <FontAwesome name="angle-right" size={18} color="#5f6e66" />
-          </Pressable>
-
-           <Pressable
-            className={`mb-3 h-14 flex-row items-center rounded-2xl px-4 active:opacity-90 ${isLoading ? "opaciity-70" : ""}`}
-            style={{
-              borderWidth: 1,
-              borderColor: colors.border,
-              backgroundColor: colors.card,
-            }}
-            disabled={isLoading}
-            onPress={() => handleSocialAuth("oauth_facebook")}
-          >
-            <View className="h-8 w-8 items-center justify-center rounded-full bg-white">
-              <FontAwesome name="facebook" size={20} color="#1877F2" />
-            </View>
-            <Text
-              className="ml-3 flex-1 text-lg font-semibold"
-              style={{ color: colors.cardForeground }}
-            >
-              {isFacebookLoading ? "Signing in with Facebook..." : "Continue with Facebook"}
-            </Text>
-            <FontAwesome name="angle-right" size={18} color="#5f6e66" />
-          </Pressable>
+          {socialProviders.map((provider) => (
+            <SocialAuthButton
+              key={provider.key}
+              label={provider.label}
+              loadingLabel={provider.loadingLabel}
+              isLoading={provider.isLoading}
+              disabled={isLoading}
+              colors={colors}
+              onPress={provider.onPress}
+              icon={provider.icon}
+            />
+          ))}
         </View>
 
         <Text className="mt-3 text-center text-sm leading-5 " style={{ color: colors.mutedForeground }}>
