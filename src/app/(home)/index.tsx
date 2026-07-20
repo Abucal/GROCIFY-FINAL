@@ -4,26 +4,25 @@ import { useState } from "react";
 import { Button, Modal, StyleSheet, View, Text } from "react-native";
 import "../../../global.css";
 import { useTheme } from "@/providers/ThemProvider";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Screen() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const colors = useTheme();
 
   return (
-    <View >
-      
+    <SafeAreaView>
+      <View>
         <UserButton />
-     
- 
-      <View
-        style={{
-          backgroundColor: colors.background,
-        }}
-      >
-        <Text style={{ color: colors.foreground }}>Hello</Text>
+
+        <View
+          style={{
+            backgroundColor: colors.background,
+          }}
+        >
+          <Text style={{ color: colors.foreground }}>Hello</Text>
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
-
-
