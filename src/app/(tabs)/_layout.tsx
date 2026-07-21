@@ -19,9 +19,6 @@ export default function TabsLayout() {
     <NativeTabs
       tintColor={colors.secondaryForeground}
       backgroundColor={colors.card}
-      unstable_nativeProps={{
-        indicatorColor: colors.secondary,
-      }}
     >
       <NativeTabs.Trigger name="index">
         <NativeTabs.Trigger.Label>Home</NativeTabs.Trigger.Label>
@@ -29,6 +26,7 @@ export default function TabsLayout() {
           sf={{ default: "house", selected: "house.fill" }}
           md={{ default: "home", selected: "home" }}
         />
+        
       </NativeTabs.Trigger>
 
       <NativeTabs.Trigger name="planner">

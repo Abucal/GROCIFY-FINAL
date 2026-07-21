@@ -2,7 +2,7 @@ import { desc, eq } from "drizzle-orm";
 import { db } from "../server/db/client";
 import { groceryItems } from "../server/db/schema";
 
-const listGroceryItems = async () => {
+export const listGroceryItems = async () => {
   const rows = await db
     .select()
     .from(groceryItems)
