@@ -3,9 +3,20 @@ import { useAuth } from "@clerk/expo";
 import { useTheme } from "@/providers/ThemProvider";
 import { NativeTabs } from "expo-router/unstable-native-tabs";
 
+import { useGroceryStore } from "@/store/grocery-store";
+import { useEffect } from "react";
+
 export default function TabsLayout() {
   const { isLoaded, isSignedIn } = useAuth();
   const colors = useTheme();
+
+  const { loadItems, items } = useGroceryStore();
+
+  useEffect(() => {
+    loadItems();
+  }, []);
+
+  console.log("ITEMS:", items);
 
   if (!isLoaded) {
     return null;
@@ -26,7 +37,6 @@ export default function TabsLayout() {
           sf={{ default: "house", selected: "house.fill" }}
           md={{ default: "home", selected: "home" }}
         />
-        
       </NativeTabs.Trigger>
 
       <NativeTabs.Trigger name="planner">
