@@ -1,19 +1,27 @@
-import { Show } from "@clerk/expo";
-import { AuthView, UserButton } from "@clerk/expo/native";
-import { useState } from "react";
-import { Button, Modal, StyleSheet, View, Text } from "react-native";
+import { UserButton } from "@clerk/expo/native";
+import { useCallback, useState } from "react";
+import { useFocusEffect } from "expo-router";
+import { StyleSheet, View, Text } from "react-native";
 import "../../../global.css";
 import { useTheme } from "@/providers/ThemProvider";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Screen() {
-  const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [userButtonKey, setUserButtonKey] = useState(0);
   const colors = useTheme();
 
+  useFocusEffect(
+    useCallback(() => {
+      setUserButtonKey((key) => key + 1);
+    }, []),
+  );
+
   return (
-    <SafeAreaView>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View>
-        <UserButton />
+        <View style={styles.userButtonHost}>
+          <UserButton key={userButtonKey} />
+        </View>
 
         <View
           style={{
@@ -26,3 +34,15 @@ export default function Screen() {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  userButtonHost: {
+    width: 44,
+    height: 44,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
