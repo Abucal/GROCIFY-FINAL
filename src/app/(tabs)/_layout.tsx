@@ -1,4 +1,4 @@
-import { Stack, Redirect } from "expo-router";
+import { Redirect } from "expo-router";
 import { useAuth } from "@clerk/expo";
 import { useTheme } from "@/providers/ThemProvider";
 import { NativeTabs } from "expo-router/unstable-native-tabs";
@@ -10,7 +10,7 @@ export default function TabsLayout() {
   const { isLoaded, isSignedIn } = useAuth();
   const colors = useTheme();
 
-  const { loadItems, items } = useGroceryStore();
+  const { loadItems } = useGroceryStore();
 
   useEffect(() => {
     loadItems();
@@ -30,10 +30,10 @@ export default function TabsLayout() {
       backgroundColor={colors.card}
     >
       <NativeTabs.Trigger name="index">
-        <NativeTabs.Trigger.Label>Home</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Label>List</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon
-          sf={{ default: "house", selected: "house.fill" }}
-          md={{ default: "home", selected: "home" }}
+          sf={{ default: "checklist", selected: "checklist" }}
+          md={{ default: "checklist", selected: "checklist" }}
         />
       </NativeTabs.Trigger>
 

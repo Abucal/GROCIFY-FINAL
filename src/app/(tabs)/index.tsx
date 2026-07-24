@@ -1,48 +1,53 @@
-import { UserButton } from "@clerk/expo/native";
-import { useCallback, useState } from "react";
-import { useFocusEffect } from "expo-router";
-import { StyleSheet, View, Text } from "react-native";
-import "../../../global.css";
+import { View, Text, ScrollView, FlatList } from "react-native";
 import { useTheme } from "@/providers/ThemProvider";
-import { SafeAreaView } from "react-native-safe-area-context";
+import TabScreenBackground from "@/components/TabScreenBackground";
+import ListHeroCard from "@/components/list/ListHeroCard";
+import { useGroceryStore } from "@/store/grocery-store";
+import PendingItemsCard from "@/components/list/PendingItemsCard";
+import CompletedItems from "@/components/list/CompletedItems";
 
-export default function Screen() {
-  const [userButtonKey, setUserButtonKey] = useState(0);
+export default function ListScreen() {
   const colors = useTheme();
+  const { items } = useGroceryStore();
 
-  useFocusEffect(
-    useCallback(() => {
-      setUserButtonKey((key) => key + 1);
-    }, []),
-  );
+  const pendingItems = items.filter((items) => !items.purchased);
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <View>
-        <View style={styles.userButtonHost}>
-          <UserButton key={userButtonKey} />
-        </View>
-
-        <View
-          style={{
-            backgroundColor: colors.background,
-          }}
-        >
-          <Text style={{ color: colors.foreground }}>Hello</Text>
-        </View>
-      </View>
-    </SafeAreaView>
+    <>
+      <FlatList
+        style={{
+          flex: 1,
+          backgroundColor: colors.card,
+          paddingHorizontal: 10,
+        }}
+        data={pendingItems}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <PendingItemsCard item={item} />}
+        contentContainerStyle={{ padding: 5, gap: 14 }}
+        contentInsetAdjustmentBehavior="automatic"
+        showsVerticalScrollIndicator={false}
+        ListHeaderComponent={
+          <View style={{ gap: 14 }}>
+            <TabScreenBackground />
+            <ListHeroCard />
+            <View className="flex-row items-center justify-between px-1">
+              <Text
+                className="text-sm font-semibold uppercase tracking-[1px] "
+                style={{ color: colors.mutedForeground }}
+              >
+                Shopping items
+              </Text>
+              <Text
+                className="text-sm "
+                style={{ color: colors.mutedForeground }}
+              >
+                {pendingItems.length} active
+              </Text>
+            </View>
+          </View>
+        }
+        ListFooterComponent={<CompletedItems />}
+      />
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  userButtonHost: {
-    width: 44,
-    height: 44,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
