@@ -26,7 +26,7 @@ const PendingItemsCard = ({ item }: { item: GroceryItem }) => {
       className="rounded-3xl border p-4"
       style={{
         backgroundColor: colors.card,
-        borderColor: colors.mutedForeground,
+        borderColor: colors.border,
       }}
     >
       <View className="flex-row items-start gap-3">
@@ -34,7 +34,7 @@ const PendingItemsCard = ({ item }: { item: GroceryItem }) => {
           className="mt-1 size-6 items-center justify-center rounded-full border "
           style={{
             backgroundColor: colors.card,
-            borderColor: colors.mutedForeground,
+            borderColor: colors.border,
           }}
           onPress={() => togglePurchased(item.id)}
         ></Pressable>

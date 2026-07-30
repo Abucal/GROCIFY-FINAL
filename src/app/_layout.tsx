@@ -5,6 +5,7 @@ import { tokenCache } from "@clerk/expo/token-cache";
 import { ThemeProvider, useTheme } from "@/providers/ThemProvider";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
+import { KeyboardProvider } from "react-native-keyboard-controller";
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
@@ -29,11 +30,13 @@ function AppLayout() {
 export default function RootLayout() {
   return (
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-      <SafeAreaProvider>
-        <ThemeProvider>
-          <AppLayout />
-        </ThemeProvider>
-      </SafeAreaProvider>
+      <KeyboardProvider>
+        <SafeAreaProvider>
+          <ThemeProvider>
+            <AppLayout />
+          </ThemeProvider>
+        </SafeAreaProvider>
+      </KeyboardProvider>
     </ClerkProvider>
   );
 }

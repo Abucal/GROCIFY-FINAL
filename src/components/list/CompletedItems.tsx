@@ -14,7 +14,7 @@ const CompletedItems = () => {
       className="mt-3 rounded-3xl border p-4"
       style={{
         backgroundColor: colors.secondary,
-        borderColor: colors.mutedForeground,
+        borderColor: colors.border,
       }}
     >
       <Text
@@ -29,7 +29,7 @@ const CompletedItems = () => {
           className="mt-3 flex-row items-center justify-between rounded-2xl border px-3 py-2"
           style={{
             backgroundColor: colors.card,
-            borderColor: colors.mutedForeground,
+            borderColor: colors.border,
           }}
         >
           <View className="flex-row items-center gap-2">

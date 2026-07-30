@@ -45,8 +45,8 @@ export const Colors = {
     card: "#16271D",
     cardForeground: "#E3F3E7",
 
-    primary: "#253D2F",
-    primaryForeground: "#C5E4CF",
+    primary: "#2DBA69",
+    primaryForeground: "#FFFFFF",
 
     secondary: "#253D2F",
     secondaryForeground: "#C5E4CF",
